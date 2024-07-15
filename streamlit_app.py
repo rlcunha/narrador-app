@@ -37,9 +37,19 @@ if st.button("Convert to Speech"):
             # Check the response
             if response.status_code == 200:
                 audio_data = response.content  # Assume the API returns the audio data directly
+
+                # Save the audio data to a file
+                audio_filename = "output.wav"
+                with open(audio_filename, "wb") as audio_file:
+                    audio_file.write(audio_data)
+
                 st.audio(audio_data, format="audio/wav")
-            else:
-                st.error(f"Error: {response.status_code} - {response.json().get('detail', 'No detail available')}")
+                st.success(f"Audio saved as {audio_filename}")
+
+                # Add, commit, and push the audio file to the GitHub repository
+                os.system(f"git add {audio_filename}")
+                os.system(f"git commit -m 'Add generated audio file'")
+                os.system("git push")
 
         except Exception as e:
             st.error(f"An error occurred: {str(e)}")
