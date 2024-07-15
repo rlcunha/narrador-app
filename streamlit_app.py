@@ -16,7 +16,8 @@ if st.button("Convert to Speech"):
             payload = {
                 "text": text_input,
                 "voice_settings": {
-                    "voice": "en_us_male"  # Example voice setting, modify as needed
+                    "voice": "Adam",  # Example voice setting, modify as needed
+                    "model": "eleven_multilingual_v2"
                 }
             }
 
