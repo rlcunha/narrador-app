@@ -1,44 +1,29 @@
-
 import streamlit as st
-import requests
+from elevenlabs import play,stream,save
+from elevenlabs.client import ElevenLabs
 
-# Set up Streamlit interface
-st.title("Text to Speech with ElevenLabs API")
-text_input = st.text_area("Enter text to convert to speech:")
+client = ElevenLabs(
+  api_key="sk_fae3356ea114cdfa623777bfe0504f2fd2f24619d7a66f28", # Defaults to ELEVEN_API_KEY
+)
 
-# Your ElevenLabs API key
-api_key = "sk_fae3356ea114cdfa623777bfe0504f2fd2f24619d7a66f28"
+# Título do aplicativo
+st.title("Balcão de Pedidos")
 
-if st.button("Convert to Speech"):
-    if text_input:
-        # API request payload
-        payload = {
-            "text": text_input,
-            "voice_settings": {
-                "voice": "en_us_male"  # Example voice setting, modify as needed
-            }
-        }
+# Campos de entrada para o nome e a mensagem
+name = st.text_input("Nome", "Ricardo!")
+message = st.text_input("Mensagem", "Seu pedido está pronto.")
+narrador = st.text_input("Narrador", "Adam")
 
-        # API request headers
-        headers = {
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {api_key}"
-        }
+# Botão para gerar e reproduzir o áudio
+if st.button("Gerar e Reproduzir Áudio"):
+  # Gerando o áudio
+    audio = client.generate(
 
-        # API endpoint
-        api_url = "https://api.elevenlabs.io/v1/text-to-speech"
+    text=name+message,
+    voice=narrador,
+    model="eleven_multilingual_v2"
+    )
 
-        # Make the API request
-        response = requests.post(api_url, json=payload, headers=headers)
-
-        # Check the response
-        if response.status_code == 200:
-            audio_url = response.json().get("audio_url")
-            if audio_url:
-                st.audio(audio_url, format="audio/wav")
-            else:
-                st.error("Audio URL not found in the response.")
-        else:
-            st.error(f"Error: {response.status_code} - {response.text}")
-    else:
-        st.warning("Please enter some text to convert.")
+    # Reproduzindo o áudio
+    play(audio, notebook=False)
+st.success("Áudio gerado e reproduzido com sucesso!")
