@@ -7,7 +7,7 @@ st.title("Text to Speech with ElevenLabs API")
 text_input = st.text_area("Enter text to convert to speech:")
 
 # Your ElevenLabs API key
-api_key = st.secrets["api_key"]
+api_key = "sk_fae3356ea114cdfa623777bfe0504f2fd2f24619d7a66f28"
 
 if st.button("Convert to Speech"):
     if text_input:
