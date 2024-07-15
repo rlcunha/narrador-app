@@ -1,6 +1,5 @@
 import streamlit as st
 import requests
-import json
 
 # Set up Streamlit interface
 st.title("Text to Speech with ElevenLabs API")
@@ -15,19 +14,17 @@ if st.button("Convert to Speech"):
             # API request payload
             payload = {
                 "text": text_input,
-                "voice_settings": {
-                    "voice": "Adam",  # Example voice setting, modify as needed
-                    "model": "eleven_multilingual_v2"
-                }
+                "voice": "en_us_male",  # Example voice setting, modify as needed
+                "model_id": "eleven_monolingual_v1"  # Ensure you are using the correct model ID
             }
 
             # API request headers
             headers = {
                 "Content-Type": "application/json",
-                "Authorization": f"Bearer {api_key}"
+                "xi-api-key": api_key
             }
 
-            # API endpoint
+            # API endpoint (verify the correct endpoint in the API documentation)
             api_url = "https://api.elevenlabs.io/v1/text-to-speech"
 
             # Make the API request
@@ -50,4 +47,3 @@ if st.button("Convert to Speech"):
 
     else:
         st.warning("Please enter some text to convert.")
-
