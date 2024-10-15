@@ -3,7 +3,7 @@ from elevenlabs import play,stream,save
 from elevenlabs.client import ElevenLabs
 
 client = ElevenLabs(
-  api_key="sk_fae3356ea114cdfa623777bfe0504f2fd2f24619d7a66f28", # Defaults to ELEVEN_API_KEY
+  api_key="sk_adb10e3031ae8a259e0b34e859fb799bd1863f39a7effb76", # Defaults to ELEVEN_API_KEY
 )
 
 # Título do aplicativo
